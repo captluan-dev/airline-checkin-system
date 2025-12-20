@@ -1,6 +1,6 @@
 Airline Check-in System (C)
 
-An academic project written in "C" that simulates an "airline check-in system".
+An personal project written in "C" that simulates an "airline check-in system".
 The goal is to practice software design, file handling, modular programming,
 and system organization using the C language.
 
