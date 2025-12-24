@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+#include "company/main.h"
 #include "company/authentication.h"
 
 int main() {
@@ -16,7 +17,8 @@ int main() {
     printf("0 - Exit\n\n");
     printf("Select an option: ");
     scanf("%d", &option);
-    getchar();
+
+    clearInputBuffer();
 
         switch (option) {
 

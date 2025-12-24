@@ -9,63 +9,65 @@ void removeNewLine(char *str) { //str = data
     str[strcspn(str, "\n")] = '\0';
 }
 
-int userValidation(char companyCode[], char userLogin[], char password[]) {
+int flightQuantity() {
 
-    int userLevel = -1;
-
-    char fileCompanyCode[10];
-    char fileUserLogin[16];
-    char filePassword[16];
+    int id;
+    int biggestID = 0;
+    char line[200];
 
     FILE *file;
-    file = fopen("data\\Company Users\\CompanyUsers.txt", "r");
+    file = fopen("data\\Company Users\\DataFlights.txt", "r");
 
-    if (file ==NULL) {
-        printf("Error opening file.\n");
-        system("pause");
-        return -1;
+    if (file == NULL) {
+        return 0;
     }
 
-    while (fscanf(file, "%3s %15s %10s", fileCompanyCode, fileUserLogin, filePassword) == 3) {
-        if (strcmp(companyCode, fileCompanyCode) == 0 &&
-            strcmp(userLogin, fileUserLogin) == 0 &&
-            strcmp(password, filePassword) == 0) {
+    while(fgets(line, 200, file)) {
 
-                if (strcmp(userLogin, "admin") == 0) {
-                    userLevel = 1; // Admin user
-                } else {
-                    userLevel = 0; // Regular user
-                }
-            }
+        if (sscanf(line, "%d", &id) == 1) {
+
+        if (id > biggestID)
+            biggestID = id;
+        }
     }
+
     fclose(file);
-    return userLevel; // Return user Level
+    return biggestID;
 }
 
-int registrationDataValidation(char companyCode[], char companyName[], char userAdmin[], char passwordAdmin[]) {
+int readInt(const char *msg) {
+    
+    char buffer[32];
+    int value;
 
-    int validation = -1;
+    while (1) {
+        printf("%s", msg);
 
-    if (strlen(companyCode) > 5) {
-        printf("Company code exceeds maximum length of 5 characters.\n");
-        return validation;
+        if (!fgets(buffer, sizeof(buffer), stdin))
+            return -1;
+
+        if (buffer[0] == '\n')
+            continue;
+
+        if (sscanf(buffer, "%d", &value) == 1)
+            return value;
+
+        printf("Invalid number. Try again.\n");
     }
+}
 
-    if (strlen(companyName) > 50) {
-        printf("Company name exceeds maximum length of 50 characters.\n");
-        return validation;
+
+void clearInputBuffer() {
+
+    int c;
+
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void readString(const char *msg, char *dest, int size) {
+    printf("%s", msg);
+
+    if (fgets(dest, size, stdin)) {
+        dest[strcspn(dest, "\n")] = '\0';
     }
-
-    if (strlen(userAdmin) > 15) {
-        printf("Admin user exceeds maximum length of 15 characters.\n");
-        return validation;
-    }
-
-    if (strlen(passwordAdmin) > 10) {
-        printf("Admin password exceeds maximum length of 10 characters.\n");
-        return validation;
-    }
-
-    validation = 1;
-    return validation;
 }

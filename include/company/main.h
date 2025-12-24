@@ -3,5 +3,7 @@
 
 void companyLogin();
 void companyRegistration();
+void clearInputBuffer();
+int readInt(const char *msg);
 
 #endif

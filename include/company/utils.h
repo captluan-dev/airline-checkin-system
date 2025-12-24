@@ -2,7 +2,9 @@
 #define UTILS_H
 
 void removeNewLine(char *str);
-int userValidation(char companyCode[], char userLogin[], char password[]);
-int registrationDataValidation(char companyCode[], char companyName[], char userAdmin[], char passwordAdmin[]);
+int flightQuantity();
+void clearInputBuffer(void);
+int readInt(const char *msg);
+void readString(const char *msg, char *dest, int size);
 
 #endif

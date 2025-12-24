@@ -11,24 +11,38 @@ void companyLogin() {
 
     char companyCode[10];
     char userLogin[16];
-    char password[16    ];
+    char password[16];
 
     printf("===============================\n");
     printf("        Company Login         \n");
     printf("===============================\n");
     printf("Company CODE: ");
-    scanf("%3s", companyCode);
+    fgets(companyCode, sizeof(companyCode), stdin);
+    removeNewLine(companyCode);
     printf("User Login: ");
-    scanf("%15s", userLogin);
+    fgets(userLogin, sizeof(userLogin), stdin);
+    removeNewLine(userLogin);
     printf("Password: ");
-    scanf("%10s", password);
+    fgets(password, sizeof(password), stdin);
+    removeNewLine(password);
 
-    if (userValidation(companyCode, userLogin, password) == 1) {
-        menuAdmin();
-    } else if (userValidation(companyCode, userLogin, password) == 0) {
+    int result;
+
+    result = userValidation(companyCode, userLogin, password);
+
+    if (result == 1) {
+        printf("Admin access granted.\n");
+        system("pause");
+        menuAdmin(companyCode);
+    }
+    else if (result == 0) {
         printf("User access granted.\n");
-    } else {
+        system("pause");
+        menuUser(companyCode);
+    }
+    else {
         printf("Invalid credentials. Please try again.\n");
+        system("pause");
     }
 }
 
@@ -36,7 +50,7 @@ void companyRegistration() {
 
     system("clear");
 
-    char strcatAux[100];
+    char strcatAux[100] = "";
 
     CompanyRegistration newCompany;
 
@@ -63,9 +77,11 @@ void companyRegistration() {
 
     if (registrationDataValidation(newCompany.companyCode, newCompany.companyName, newCompany.userAdmin, newCompany.passwordAdmin) == 1) {
         printf("Company registered successfully.\n");
+        newCompany.userQuantity = 1;
     } else {
         printf("Registration failed. Please check the data and try again.\n");
-    } // Registrar se os dados não estão excedendo o limite
+        return;
+    }
 
     strcat(strcatAux, newCompany.companyCode);
     strcat(strcatAux, " ");
@@ -82,7 +98,7 @@ void companyRegistration() {
         return;
     }
 
-    fprintf(file, "%s\n", strcatAux);
+    fprintf(file, "%d %s\n", newCompany.userQuantity, strcatAux);
 
     fclose(file);
 }
