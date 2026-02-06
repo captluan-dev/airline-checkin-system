@@ -22,10 +22,8 @@
         printf("4 - Manage Flights\n");
         printf("5 - Manage User\n");
         printf("0 - Logout\n\n");
-        printf("Select an option: ");
-        scanf("%d", &option);
 
-        clearInputBuffer();
+        option = readInt("Select an option: ");
 
             switch (option) {
 
@@ -34,29 +32,32 @@
                     break;
 
                 case 2:
-                    // Modify Flight functionality
+                    modifyFlight(code);
                     break;
 
+
                 case 3:
-                    // Delete Flight functionality
+                    deleteFlight(code);
                     break;
 
                 case 4:
-                    // Manage Flights functionality
+                    manageFlights(code);
                     break;
 
                 case 5:
-                    // Manage User functionality
+                    manageUsers(code);
                     break;
 
                 case 0:
                     printf("Logging out...\n");
-                    system("pause");
+                    printf("Press Enter to continue...\n");
+                    getchar();
                     break;
 
                 default:
                     printf("Invalid option. Please try again.\n");
-                    system("pause");
+                    printf("Press Enter to continue...\n");
+                    getchar();
                     break;
             }
 
@@ -90,25 +91,27 @@ void menuUser(const char *code) {
                     break;
 
                 case 2:
-                    // Modify Flight functionality
+                    modifyFlight(code);
                     break;
 
                 case 3:
-                    // Delete Flight functionality
+                    deleteFlight(code);
                     break;
 
                 case 4:
-                    // Manage Users functionality
+                    manageFlights(code);
                     break;
 
                 case 0:
                     printf("Logging out...\n");
-                    system("pause");
+                    printf("Press Enter to continue...\n");
+                    getchar();
                     break;
 
                 default:
                     printf("Invalid option. Please try again.\n");
-                    system("pause");
+                    printf("Press Enter to continue...\n");
+                    getchar();
                     break;
             }
             

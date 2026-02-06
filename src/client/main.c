@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "company/main.h"
-#include "company/authentication.h"
-
 int main() {
 
     int option;
@@ -13,10 +10,10 @@ int main() {
     system("clear");
 
     printf("===============================\n");
-    printf("         Company System        \n");
+    printf("          Client System        \n");
     printf("===============================\n");
-    printf("1 - Company Login\n");
-    printf("2 - Register Company\n");
+    printf("1 - Client Login\n");
+    printf("2 - Register Client\n");
     printf("0 - Exit\n\n");
     printf("Select an option: ");
     scanf("%d", &option);
@@ -26,11 +23,11 @@ int main() {
         switch (option) {
 
             case 1:
-                companyLogin();
+                clientLogin();
                 break;
 
             case 2:
-                companyRegistration();
+                clientRegistration();
                 break;
 
             case 0:
@@ -43,7 +40,4 @@ int main() {
         }
 
     } while (option != 0);
-
-    return 0;
-
 }

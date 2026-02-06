@@ -14,7 +14,7 @@ int userValidation(char companyCode[], char userLogin[], char password[]) {
     int userID;
 
     FILE *file;
-    file = fopen("data\\Company Users\\CompanyUsers.txt", "r");
+    file = fopen("data/Company Users/CompanyUsers.txt", "r");
 
     if (file ==NULL) {
         printf("Error opening file.\n");
@@ -23,14 +23,14 @@ int userValidation(char companyCode[], char userLogin[], char password[]) {
     }
 
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d %9s %15s %15s", &userID, fileCompanyCode, fileUserLogin, filePassword) == 4) {
+        if (sscanf(line, "%d %s %s %s", &userID, fileCompanyCode, fileUserLogin, filePassword) == 4) {
 
             if (strcmp(companyCode, fileCompanyCode) == 0 &&
                 strcmp(userLogin, fileUserLogin) == 0 &&
                 strcmp(password, filePassword) == 0) {
 
                 fclose(file);
-                return (strcmp(userLogin, "admin") == 0) ? 1 : 0;
+                return userID;
             }
         }
     }
@@ -115,7 +115,7 @@ int newFlightValidation(char flightNumber[], char origin[], char destination[], 
     return validation;
 }
 
-int dateValidation(const char *date) {
+int dateValidation(char *date) {
 
     int i;
     int day, month, year;
@@ -153,7 +153,7 @@ int dateValidation(const char *date) {
     return 1;
 }
 
-int timeValidation (const char *hours) {
+int timeValidation (char *hours) {
 
     int i;
     int time, minute;

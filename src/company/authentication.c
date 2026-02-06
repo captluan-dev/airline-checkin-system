@@ -32,17 +32,20 @@ void companyLogin() {
 
     if (result == 1) {
         printf("Admin access granted.\n");
-        system("pause");
+        printf("Press ENTER to continue...");
+        getchar();
         menuAdmin(companyCode);
     }
     else if (result == 0) {
         printf("User access granted.\n");
-        system("pause");
+        printf("Press ENTER to continue...");
+        getchar();
         menuUser(companyCode);
     }
     else {
         printf("Invalid credentials. Please try again.\n");
-        system("pause");
+        printf("Press ENTER to continue...");
+        getchar();
     }
 }
 
@@ -90,7 +93,7 @@ void companyRegistration() {
     strcat(strcatAux, newCompany.passwordAdmin);
 
     FILE *file;
-    file = fopen("data\\Company Users\\CompanyUsers.txt", "a");
+    file = fopen("data/Company Users/CompanyUsers.txt", "a");
 
     if (file == NULL) {
         printf("Error opening file.\n");
