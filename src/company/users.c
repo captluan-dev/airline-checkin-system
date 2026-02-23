@@ -8,21 +8,21 @@ void listUsers(int user) {
 
     system("clear");
 
-    FILE *file = fopen("data/Company Users/CompanyUsers.txt", "r");
+    FILE *file = fopen("data/Company Users/CompanyUsers.dat", "r");
 
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 
     char companyCode[50], username[50], password[50];
-    int codeUser, isAdmin, isUser;
+    int codeUser;
 
     while (fscanf(file, "%d %s %s %s", &codeUser, companyCode, username, password) == 4) {
 
         if (user == 1 && codeUser == 1) {
-            isAdmin = 1;
+
 
             printf("===============================\n");
             printf("        Company Admins        \n");
@@ -32,7 +32,7 @@ void listUsers(int user) {
             printf("[Username]: %s\n", username);
             printf("------------------------------\n");
         } else if (user == 2 && codeUser == 0) {
-            isUser = 1;
+
 
             printf("===============================\n");
             printf("         Company Users        \n");
@@ -54,16 +54,16 @@ void AddUser(const char *codeCompany) {
     
     system("clear");
 
-    FILE *file = fopen("data/Company Users/CompanyUsers.txt", "a");
+    FILE *file = fopen("data/Company Users/CompanyUsers.dat", "a");
 
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 
     int codeUser;
-    char companyCode[50], username[50], password[50];
+    char username[50], password[50];
 
     printf("===============================\n");
     printf("          Add User            \n");
@@ -80,7 +80,7 @@ void AddUser(const char *codeCompany) {
     fgets(password, sizeof(password), stdin);
     removeNewLine(password);
 
-    fprintf(file, "%d %s %s %s\n", codeUser, codeCompany, username, password);
+    fprintf(file, "%d;%s;%s;%s\n", codeUser, codeCompany, username, password);
 
     fclose(file);
 
@@ -103,8 +103,8 @@ void modifyUser(const char *codeCompany) {
     fgets(usernameModify, sizeof(usernameModify), stdin);
     removeNewLine(usernameModify);
 
-    FILE *file = fopen("data/Company Users/CompanyUsers.txt", "r");
-    FILE *tempFile = fopen("data/Company Users/TempUsers.txt", "w");
+    FILE *file = fopen("data/Company Users/CompanyUsers.dat", "r");
+    FILE *tempFile = fopen("data/Company Users/TempUsers.dat", "w");
 
     if (file == NULL || tempFile == NULL) {
         printf("Error opening files.\n");
@@ -166,11 +166,11 @@ void modifyUser(const char *codeCompany) {
     fclose(tempFile);
 
     if (found) {
-        remove("data/Company Users/CompanyUsers.txt");
-        rename("data/Company Users/TempUsers.txt", "data/Company Users/CompanyUsers.txt");
+        remove("data/Company Users/CompanyUsers.dat");
+        rename("data/Company Users/TempUsers.dat", "data/Company Users/CompanyUsers.dat");
         printf("User updated successfully!\n");
     } else {
-        remove("data/Company Users/TempUsers.txt");
+        remove("data/Company Users/TempUsers.dat");
         printf("User not found.\n");
     }
     printf("Press Enter to continue...");
@@ -190,8 +190,8 @@ void deleteUser(const char *codeCompany) {
     fgets(usernameDelete, sizeof(usernameDelete), stdin);
     removeNewLine(usernameDelete);
 
-    FILE *file = fopen("data/Company Users/CompanyUsers.txt", "r");
-    FILE *tempFile = fopen("data/Company Users/TempUsers.txt", "w");
+    FILE *file = fopen("data/Company Users/CompanyUsers.dat", "r");
+    FILE *tempFile = fopen("data/Company Users/TempUsers.dat", "w");
 
     if (file == NULL || tempFile == NULL) {
         printf("Error opening files.\n");
@@ -217,11 +217,11 @@ void deleteUser(const char *codeCompany) {
     fclose(tempFile);
 
     if (found) {
-        remove("data/Company Users/CompanyUsers.txt");
-        rename("data/Company Users/TempUsers.txt", "data/Company Users/CompanyUsers.txt");
+        remove("data/Company Users/CompanyUsers.dat");
+        rename("data/Company Users/TempUsers.dat", "data/Company Users/CompanyUsers.dat");
         printf("User deleted successfully!\n");
     } else {
-        remove("data/Company Users/TempUsers.txt");
+        remove("data/Company Users/TempUsers.dat");
         printf("User not found.\n");
     }
     printf("Press Enter to continue...");
@@ -236,11 +236,11 @@ void listAllUsers() {
     printf("           All Users     \n");
     printf("===============================\n");
 
-    FILE *file = fopen("data/Company Users/CompanyUsers.txt", "r");
+    FILE *file = fopen("data/Company Users/CompanyUsers.dat", "r");
 
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 

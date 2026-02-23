@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "client/validationsClient.h"
+#include "client/structs.h"
+
 int dataClientValidation(char username[], char password[], char fullName[], char email[], char phoneNumber[]) {
 
     int validation = -1;
@@ -46,7 +49,7 @@ int loginValidation(char username[], char password[]) {
 
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return -1;
     }
 

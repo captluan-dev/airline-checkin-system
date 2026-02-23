@@ -93,11 +93,11 @@ void companyRegistration() {
     strcat(strcatAux, newCompany.passwordAdmin);
 
     FILE *file;
-    file = fopen("data/Company Users/CompanyUsers.txt", "a");
+    file = fopen("data/Company Users/CompanyUsers.dat", "a");
 
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 

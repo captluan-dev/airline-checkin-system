@@ -14,16 +14,16 @@ int userValidation(char companyCode[], char userLogin[], char password[]) {
     int userID;
 
     FILE *file;
-    file = fopen("data/Company Users/CompanyUsers.txt", "r");
+    file = fopen("data/Company Users/CompanyUsers.dat", "r");
 
     if (file ==NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return -1;
     }
 
     while (fgets(line, sizeof(line), file)) {
-        if (sscanf(line, "%d %s %s %s", &userID, fileCompanyCode, fileUserLogin, filePassword) == 4) {
+        if (sscanf(line, "%d;%[^;];%[^;];%s", &userID, fileCompanyCode, fileUserLogin, filePassword) == 4) {
 
             if (strcmp(companyCode, fileCompanyCode) == 0 &&
                 strcmp(userLogin, fileUserLogin) == 0 &&

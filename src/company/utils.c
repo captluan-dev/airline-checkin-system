@@ -16,7 +16,7 @@ int flightQuantity() {
     char line[200];
 
     FILE *file;
-    file = fopen("data/Company Users/DataFlights.txt", "r");
+    file = fopen("data/Company Users/DataFlights.dat", "r");
 
     if (file == NULL) {
         return 0;
@@ -74,19 +74,19 @@ void readString(const char *msg, char *dest, int size) {
 
 void showDetailsFlightByCode(int flightCode) {
 
-    FILE *file = fopen("data/Company Users/DataFlights.txt", "r");
+    FILE *file = fopen("data/Company Users/DataFlights.dat", "r");
     
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 
-    char fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
+    char companyCode[10], fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
     int code, seats, occupiedSeats;
     int found = 0;
 
-    while (fscanf(file, "%d %s %s %s %s %s %s %s %d %d", &code, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 10) {
+    while (fscanf(file, "%d;%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%d;%d", &code, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 11) {
 
         if (code == flightCode) {
 
@@ -114,27 +114,28 @@ void showDetailsFlightByCode(int flightCode) {
 
     if (!found) {
         printf("Flight with code %d not found.\n", flightCode);
+        getchar();
     }
 
     fclose(file);
-    system("pause");
+    getchar();
 }
 
 void showDetailsFlightByFlightCode(const char *flightCode) {
 
-    FILE *file = fopen("data/Company Users/DataFlights.txt", "r");
+    FILE *file = fopen("data/Company Users/DataFlights.dat", "r");
     
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 
-    char fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
+    char companyCode[10], fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
     int code, seats, occupiedSeats;
     int found = 0;
 
-    while (fscanf(file, "%d %s %s %s %s %s %s %s %d %d", &code, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 10) {
+    while (fscanf(file, "%d;%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%d;%d", &code, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 11) {
 
         if (strcmp(fCode, flightCode) == 0) {
 
@@ -165,22 +166,22 @@ void showDetailsFlightByFlightCode(const char *flightCode) {
     }
 
     fclose(file);
-    system("pause");
+    getchar();
 }
 
 void listFlights(const char *codeCompany) {
 
     system("clear");
 
-    FILE *file = fopen("data/Company Users/DataFlights.txt", "r");
+    FILE *file = fopen("data/Company Users/DataFlights.dat", "r");
     
     if (file == NULL) {
         printf("Error opening file.\n");
-        system("pause");
+        getchar();
         return;
     }
 
-    char fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
+    char companyCode[10], fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
     int code, seats, occupiedSeats;
     int found = 0;
 
@@ -188,7 +189,7 @@ void listFlights(const char *codeCompany) {
     printf("        All Flights           \n");
     printf("===============================\n");
 
-    while (fscanf(file, "%d %s %s %s %s %s %s %s %d %d", &code, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 10) {
+    while (fscanf(file, "%d;%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%d;%d", &code, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 11) {
 
         if (strncmp(fCode, codeCompany, strlen(codeCompany)) == 0) {
             found = 1;

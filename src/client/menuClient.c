@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "client/menuClient.h"
+#include "client/flightsClient.h"
+#include "client/utilsClient.h"
+
 void menuClient() {
 
     int option;

@@ -3,12 +3,14 @@
 #include <string.h>
 
 #include "client/structs.h"
+#include "client/authenticationClient.h"
+#include "client/menuClient.h"
+#include "client/utilsClient.h"
+#include "client/validationsClient.h"
 
 void clientRegistration() {
 
     system("clear");
-
-    char strcatAux[100] = "";
 
     Client newClient;
 
@@ -42,7 +44,7 @@ void clientRegistration() {
 
         if (file == NULL) {
             printf("Error opening file for writing.\n");
-            system("pause");
+            getchar();
             return;
         }
 
@@ -65,7 +67,7 @@ void clientLogin() {
 
     char username[50];
     char password[50];
-    int loginSuccess = 0;
+
 
     printf("===============================\n");
     printf("         Client Login         \n");
@@ -83,7 +85,8 @@ void clientLogin() {
         printf("Login successful!\n");
         printf("Press ENTER to continue...");
         getchar();
-        // Proceed to client menu (not implemented here)
+        system("clear");
+        menuClient();
     } else if (validationResult == -1) {
         printf("Invalid username or password. Please try again.\n");
         printf("Press ENTER to continue...");

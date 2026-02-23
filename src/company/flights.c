@@ -11,10 +11,6 @@ void createFlight(const char *codeCompany) {
 
     system("clear");
 
-    int flightQtt = flightQuantity();
-
-    char strcatAux[500] = "";
-
     CreateFlight newFlight;
 
     printf("===============================\n");
@@ -60,17 +56,15 @@ void createFlight(const char *codeCompany) {
         newFlight.flightID = flightQuantity() + 1;
 
         FILE *file;
-        file = fopen("data/Company Users/DataFlights.txt", "a");
+        file = fopen("data/Company Users/DataFlights.dat", "a");
 
         if (file == NULL) {
             printf("Error opening file.\n");
-            system("pause");
+            getchar();
             return;
         }
 
-        sprintf(strcatAux, "%s%s %s %s %s %s %s %s", codeCompany, newFlight.flightNumber, newFlight.origin, newFlight.departureDate, newFlight.departureTime, newFlight.destination, newFlight.arrivalDate, newFlight.arrivalTime);
-
-        fprintf(file, "%d %s %d %d\n", newFlight.flightID, strcatAux, newFlight.totalSeats, occupiedSeats);
+        fprintf(file, "%d;%s;%s;%s;%s;%s;%s;%s;%s;%d;%d\n", newFlight.flightID, codeCompany, newFlight.flightNumber, newFlight.origin, newFlight.departureDate, newFlight.departureTime, newFlight.destination, newFlight.arrivalDate, newFlight.arrivalTime, newFlight.totalSeats, occupiedSeats);
 
         fclose(file);
 
@@ -78,7 +72,7 @@ void createFlight(const char *codeCompany) {
         printf("Flight creation failed due to validation errors.\n");
     }
 
-    system("pause");
+    getchar();
 }
 
 void modifyFlight(const char *codeCompany) {
@@ -103,8 +97,8 @@ void modifyFlight(const char *codeCompany) {
     fgets(timeFlight, sizeof(timeFlight), stdin);
     removeNewLine(timeFlight);
 
-    FILE *file = fopen("data/Company Users/DataFlights.txt", "r");
-    FILE *tempFile = fopen("data/Company Users/TempFlights.txt", "w");
+    FILE *file = fopen("data/Company Users/DataFlights.dat", "r");
+    FILE *tempFile = fopen("data/Company Users/TempFlights.dat", "w");
 
     if (file == NULL || tempFile == NULL) {
         printf("Error opening files.\n");
@@ -112,11 +106,11 @@ void modifyFlight(const char *codeCompany) {
         return;
     }
 
-    char fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
+    char companyCode[10], fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
     int code, seats, occupiedSeats;
     int found = 0;
 
-    while (fscanf(file, "%d %s %s %s %s %s %s %s %d %d", &code, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 10) {
+    while (fscanf(file, "%d;%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%d;%d", &code, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 11) {
         
         if (strcmp(flightModifyCode, fCode) == 0 && strcmp(dateFlight, depDate) == 0 && strcmp(timeFlight, depTime) == 0) {
             found = 1;
@@ -214,25 +208,25 @@ void modifyFlight(const char *codeCompany) {
             }
 
             if(op == 0) {
-                 fprintf(tempFile, "%d %s %s %s %s %s %s %s %d %d\n", code, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
+                 fprintf(tempFile, "%d;%s;%s;%s;%s;%s;%s;%s;%s;%d;%d\n", code, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
                  continue;
             }
         }
-        fprintf(tempFile, "%d %s %s %s %s %s %s %s %d %d\n", code, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
+        fprintf(tempFile, "%d;%s;%s;%s;%s;%s;%s;%s;%s;%d;%d\n", code, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
     }
 
     fclose(file);
     fclose(tempFile);
 
     if (found) {
-        remove("data/Company Users/DataFlights.txt");
-        rename("data/Company Users/TempFlights.txt", "data/Company Users/DataFlights.txt");
+        remove("data/Company Users/DataFlights.dat");
+        rename("data/Company Users/TempFlights.dat", "data/Company Users/DataFlights.dat");
         printf("Flight updated successfully!\n");
     } else {
-        remove("data/Company Users/TempFlights.txt");
+        remove("data/Company Users/TempFlights.dat");
         printf("Flight not found.\n");
     }
-    system("pause");
+    getchar();
 }
 
 void deleteFlight(const char *codeCompany) {
@@ -249,8 +243,8 @@ void deleteFlight(const char *codeCompany) {
     scanf("%d", &code);
     clearInputBuffer();
 
-    FILE *file = fopen("data/Company Users/DataFlights.txt", "r");
-    FILE *tempFile = fopen("data/Company Users/TempFlights.txt", "w");
+    FILE *file = fopen("data/Company Users/DataFlights.dat", "r");
+    FILE *tempFile = fopen("data/Company Users/TempFlights.dat", "w");
 
     if (file == NULL || tempFile == NULL) {
         printf("Error opening files.\n");
@@ -258,12 +252,12 @@ void deleteFlight(const char *codeCompany) {
         return;
     }
 
-    char fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
+    char companyCode[10], fCode[20], origin[50], dest[50], depDate[12], depTime[7], arrDate[12], arrTime[7];
     int flightID, seats, occupiedSeats;
     int found = 0;
     char confirm;
 
-    while (fscanf(file, "%d %s %s %s %s %s %s %s %d %d", &flightID, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 10) {
+    while (fscanf(file, "%d;%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%[^;];%d;%d", &flightID, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, &seats, &occupiedSeats) == 11) {
 
         if (flightID == code) {
             found = 1;
@@ -280,31 +274,31 @@ void deleteFlight(const char *codeCompany) {
                 printf("Press Enter to continue...");
                 getchar();
 
-                fprintf(tempFile, "%d %s %s %s %s %s %s %s %d %d\n", flightID, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
+                fprintf(tempFile, "%d;%s;%s;%s;%s;%s;%s;%s;%s;%d;%d\n", flightID, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
 
                 fclose(file);
                 fclose(tempFile);
-                remove("data/Company Users/TempFlights.txt");
+                remove("data/Company Users/TempFlights.dat");
                 return;
             }
 
             continue;
         }
-        fprintf(tempFile, "%d %s %s %s %s %s %s %s %d %d\n", flightID, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
+        fprintf(tempFile, "%d;%s;%s;%s;%s;%s;%s;%s;%s;%d;%d\n", flightID, companyCode, fCode, origin, depDate, depTime, dest, arrDate, arrTime, seats, occupiedSeats);
     }
 
     fclose(file);
     fclose(tempFile);
 
     if (found) {
-        remove("data/Company Users/DataFlights.txt");
-        rename("data/Company Users/TempFlights.txt", "data/Company Users/DataFlights.txt");
+        remove("data/Company Users/DataFlights.dat");
+        rename("data/Company Users/TempFlights.dat", "data/Company Users/DataFlights.dat");
         printf("Flight deleted successfully!\n");
     } else {
-        remove("data/Company Users/TempFlights.txt");
+        remove("data/Company Users/TempFlights.dat");
         printf("Flight not found.\n");
     }
-    system("pause");
+    getchar();
 }
 
 void manageFlights(const char *code) {

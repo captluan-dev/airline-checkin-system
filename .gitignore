@@ -1,18 +1,54 @@
-# Executables
+# Build artifacts
+build/
+*.o
+*.a
+*.so
+
+# Executables (but keep them in bin/)
+client_test
+client_debug.exe
+company_debug.exe
+
+# Object files
+*.o
+*.obj
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# IDEs
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Compiled
 *.exe
 *.out
-*.bin
-
-# Objects
-*.o
-
-# Build folders
-bin/
-build/
 
 # Temporary files
 *.log
 *.tmp
+*.temp
 
-# VS Code
+# IDE-specific
 .vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test outputs
+tests/**/*.log
+tests/**/*.tmp
+
+# Ignore data files (optional - uncomment after first setup)
+# data/Company Users/*.dat
+# data/Data Clients/*.dat
+
+# Keep these tracked
+!bin/
+!bin/.gitkeep

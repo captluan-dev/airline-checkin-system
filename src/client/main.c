@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "client/main.h"
+#include "client/authenticationClient.h"
+
 int main() {
 
     int option;
